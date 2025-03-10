@@ -1,36 +1,134 @@
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Shield, BarChart3, Truck, Check, Route, Users, Settings, Phone, Mail, Map } from "lucide-react";
+import { 
+  MapPin, 
+  Clock, 
+  Shield, 
+  BarChart3, 
+  Truck, 
+  Check, 
+  Route, 
+  Settings, 
+  Navigation, 
+  Map, 
+  Package, 
+  CalendarClock,
+  Sparkles
+} from "lucide-react";
 import Link from "next/link";
-import Footer from "@/components/footer/footer";
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative">
-        {/* <div 
-          className="absolute inset-0 bg-cover bg-center z-0"
-          style={{
-            backgroundImage: "url('https://d2qt0ksb47ks9g.cloudfront.net/new-uploads/Activities/1741287724894_pngimg.com%20-%20truck_PNG16226.png')",
-            filter: "brightness(0.4)",
-            backgroundSize: "cover",
-            backgroundPosition: "center"
-          }}
-        /> */}
+      {/* Hero Section with Abstract Transport Graphics */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-100">
+        {/* Decorative SVG elements */}
+        <div className="absolute inset-0 z-0 opacity-10">
+          <div className="absolute top-20 left-10 text-blue-500">
+            <Truck size={120} strokeWidth={1} />
+          </div>
+          <div className="absolute top-40 right-20 text-cyan-600">
+            <Map size={100} strokeWidth={1} />
+          </div>
+          <div className="absolute bottom-20 left-1/4 text-orange-500">
+            <Route size={80} strokeWidth={1} />
+          </div>
+          <div className="absolute top-1/3 right-1/3 text-green-500">
+            <Navigation size={90} strokeWidth={1} />
+          </div>
+          <div className="absolute bottom-40 right-1/4 text-indigo-500">
+            <Package size={70} strokeWidth={1} />
+          </div>
+          <div className="absolute top-2/3 left-1/3 text-rose-500">
+            <CalendarClock size={60} strokeWidth={1} />
+          </div>
+        </div>
+
+        {/* Animated paths representing routes */}
+        <svg className="absolute inset-0 w-full h-full z-0 opacity-5" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0,100 Q250,0 500,100 T1000,100"
+            fill="none"
+            stroke="#0284c7"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="animate-pulse"
+          />
+          <path
+            d="M0,200 Q250,300 500,200 T1000,200"
+            fill="none"
+            stroke="#0e7490"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="animate-pulse"
+          />
+          <path
+            d="M0,300 Q250,200 500,300 T1000,300"
+            fill="none"
+            stroke="#0891b2"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="animate-pulse"
+          />
+          <path
+            d="M0,400 Q250,500 500,400 T1000,400"
+            fill="none"
+            stroke="#06b6d4"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="animate-pulse"
+          />
+          <path
+            d="M0,500 Q250,400 500,500 T1000,500"
+            fill="none"
+            stroke="#22d3ee"
+            strokeWidth="4"
+            strokeDasharray="10,10"
+            className="animate-pulse"
+          />
+        </svg>
+
+        {/* Main content */}
         <div className="relative z-10 container mx-auto px-4 py-32 text-black">
           <div className="max-w-3xl">
+            <div className="flex items-center mb-6 text-cyan-600">
+              <Sparkles className="mr-2" />
+              <span className="font-semibold tracking-wide">NEXT-GENERATION TRUCKING PLATFORM</span>
+            </div>
             <h1 className="text-5xl font-bold mb-6">
               Smart Fleet Management for Modern Logistics
             </h1>
-            <p className="text-xl mb-8 text-gray-500">
+            <p className="text-xl mb-8 text-gray-600">
               Streamline your operations with real-time tracking, route optimization, and comprehensive fleet management tools.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-4">
               <Button size="lg" asChild className="bg-cyan-600 hover:bg-cyan-700">
-                <Link href="/signup">Get Started</Link>
+                <Link href="/map">Get Started</Link>
               </Button>
-              <Button size="lg" variant="orange" className="bg-orange-600 hover:bg-orange-700" asChild>
-                <Link href="/demo">Request Demo</Link>
+              <Button size="lg" variant="outline" className="border-orange-600 text-orange-600 hover:bg-orange-50" asChild>
+                <Link href="/doc">Documentation</Link>
               </Button>
+            </div>
+
+            {/* Feature highlights */}
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="flex items-center">
+                <div className="bg-cyan-100 p-2 rounded-full text-cyan-600 mr-3">
+                  <MapPin size={18} />
+                </div>
+                <span className="text-sm font-medium">Real-time Tracking</span>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-indigo-100 p-2 rounded-full text-indigo-600 mr-3">
+                  <Route size={18} />
+                </div>
+                <span className="text-sm font-medium">Route Optimization</span>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-green-100 p-2 rounded-full text-green-600 mr-3">
+                  <Clock size={18} />
+                </div>
+                <span className="text-sm font-medium">ELD Compliance</span>
+              </div>
             </div>
           </div>
         </div>
@@ -74,43 +172,43 @@ export default function Home() {
             How We Track Your Fleet
           </h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
-  {/* Step Cards */}
-  <div className="space-y-10 mt-20">
-    <StepCard
-      step={1}
-      icon={<Truck className="h-6 w-6" />}
-      title="Real-Time Location Tracking"
-      description="Track your fleet in real-time with GPS-enabled devices."
-    />
-    <StepCard
-      step={2}
-      icon={<Route className="h-6 w-6" />}
-      title="Route Optimization"
-      description="Optimize routes based on traffic, weather, and road conditions."
-    />
-    <StepCard
-      step={3}
-      icon={<Check className="h-6 w-6" />}
-      title="Compliance & Safety"
-      description="Ensure compliance with ELD regulations and monitor driver safety."
-    />
-    <StepCard
-      step={4}
-      icon={<Settings className="h-6 w-6" />}
-      title="Advanced Analytics"
-      description="Gain insights into fleet performance, fuel efficiency, and maintenance needs."
-    />
-  </div>
+            {/* Step Cards */}
+            <div className="space-y-10 mt-20">
+              <StepCard
+                step={1}
+                icon={<Truck className="h-6 w-6" />}
+                title="Real-Time Location Tracking"
+                description="Track your fleet in real-time with GPS-enabled devices."
+              />
+              <StepCard
+                step={2}
+                icon={<Route className="h-6 w-6" />}
+                title="Route Optimization"
+                description="Optimize routes based on traffic, weather, and road conditions."
+              />
+              <StepCard
+                step={3}
+                icon={<Check className="h-6 w-6" />}
+                title="Compliance & Safety"
+                description="Ensure compliance with ELD regulations and monitor driver safety."
+              />
+              <StepCard
+                step={4}
+                icon={<Settings className="h-6 w-6" />}
+                title="Advanced Analytics"
+                description="Gain insights into fleet performance, fuel efficiency, and maintenance needs."
+              />
+            </div>
 
-  {/* Image */}
-  <div className="rounded-lg overflow-hidden flex justify-center items-center">
-    <img
-      src="https://freepngimg.com/download/machine/67105-map-material-tracking-icon-route-global-positioning.png"
-      alt="Map"
-      className="w-full max-w-md lg:max-w-lg xl:max-w-xl"
-    />
-  </div>
-</div>
+            {/* Image */}
+            <div className="rounded-lg overflow-hidden flex justify-center items-center">
+              <img
+                src="https://freepngimg.com/download/machine/67105-map-material-tracking-icon-route-global-positioning.png"
+                alt="Map"
+                className="w-full max-w-md lg:max-w-lg xl:max-w-xl"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -154,7 +252,6 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-<Footer/>
     </main>
   )
 }

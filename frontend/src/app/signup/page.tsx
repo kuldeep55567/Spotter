@@ -1,13 +1,96 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Mail, Lock, User, LogIn } from "lucide-react"
 import Link from "next/link"
-import Footer from "@/components/footer/footer" // Import your Footer component
+import { useRouter } from "next/navigation"
+import Footer from "@/components/footer/footer"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function SignupPage() {
+  const router = useRouter()
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  interface FormData {
+    name: string
+    email: string
+    username: string
+    password: string
+  }
+
+  interface ChangeEvent {
+    target: {
+      id: string
+      value: string
+    }
+  }
+
+  const handleChange = (e: ChangeEvent) => {
+    const { id, value } = e.target
+    setFormData((prev: FormData) => ({
+      ...prev,
+      [id]: value,
+    }))
+  }
+
+  interface SignupResponse {
+    tokens: {
+      access: string
+      refresh: string
+    }
+    user: {
+      id: string
+      name: string
+      email: string
+      username: string
+    }
+    error?: string
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}signup/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data: SignupResponse = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Signup failed")
+      }
+
+      // Store tokens in localStorage or a more secure storage option
+      localStorage.setItem("accessToken", data.tokens.access)
+      localStorage.setItem("refreshToken", data.tokens.refresh)
+      localStorage.setItem("user", JSON.stringify(data.user))
+
+      // Redirect to dashboard or home page
+      router.push("/map")
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Main Content */}
@@ -18,8 +101,15 @@ export default function SignupPage() {
             <p className="text-gray-500">Sign up to get started</p>
           </div>
 
+          {/* Error Alert */}
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
           {/* Signup Form */}
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name" className="flex items-center gap-2 mb-2">
@@ -31,6 +121,8 @@ export default function SignupPage() {
                   type="text"
                   placeholder="Enter your full name"
                   required
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -43,6 +135,8 @@ export default function SignupPage() {
                   type="email"
                   placeholder="Enter your email"
                   required
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -55,6 +149,8 @@ export default function SignupPage() {
                   type="text"
                   placeholder="Enter your username"
                   required
+                  value={formData.username}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -67,13 +163,35 @@ export default function SignupPage() {
                   type="password"
                   placeholder="Enter your password"
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Password must be at least 8 characters with uppercase, lowercase, and number
+                </p>
               </div>
             </div>
 
-            <Button type="submit" variant="cyan" className="w-full">
-              <LogIn className="h-4 w-4 mr-2" />
-              Sign Up
+            <Button 
+              type="submit" 
+              variant="cyan" 
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                <>
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Sign Up
+                </>
+              )}
             </Button>
 
             {/* Divider */}
@@ -89,9 +207,9 @@ export default function SignupPage() {
             {/* Login with Google (Placeholder) */}
             <Button variant="outline" className="w-full" disabled>
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png"
                 alt="Google Logo"
-                className="h-4 w-4 mr-2"
+                className="h-6 w-6 mr-2"
               />
               Sign up with Google
             </Button>

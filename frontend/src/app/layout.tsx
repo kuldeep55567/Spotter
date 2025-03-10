@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from '@/components/ui/navigation'; // Import Navigation
-
+import Footer from '@/components/footer/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -28,6 +28,7 @@ export default function RootLayout({
           <Navigation /> {/* Added Navigation here */}
           <main>{children}</main>
         </ThemeProvider>
+      <Footer/>
       </body>
     </html>
   );

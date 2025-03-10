@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
@@ -13,10 +14,92 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
-import { Truck, Menu, X } from "lucide-react"
+import { Truck, Menu, X, User, MapPin } from "lucide-react"
 
 export function Navigation() {
+  const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  type User = {
+    name: string;
+    user_id?: string;
+  };
+
+  const [user, setUser] = React.useState<User | null>(null)
+
+  // Load user data from localStorage
+  const loadUserData = React.useCallback(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const storedUser = localStorage.getItem('user')
+        if (storedUser) {
+          const userData = JSON.parse(storedUser)
+          setUser(userData)
+          console.log('User data loaded in Navigation:', userData.name)
+        } else {
+          setUser(null)
+        }
+      } catch (error) {
+        console.error('Failed to parse user from localStorage', error)
+        setUser(null)
+      }
+    }
+  }, [])
+
+  // Listen for login/logout events
+  React.useEffect(() => {
+    // Initial load of user data
+    loadUserData()
+    
+    // Set up event listeners for login and logout
+    if (typeof window !== 'undefined') {
+      // Function to handle login event
+      const handleLogin = () => {
+        console.log('Login event detected')
+        loadUserData()
+      }
+      
+      // Function to handle logout event
+      const handleLogout = () => {
+        console.log('Logout event detected')
+        setUser(null)
+      }
+      
+      // Add event listeners
+      window.addEventListener('userLogin', handleLogin)
+      window.addEventListener('userLogout', handleLogout)
+      
+      // Clean up event listeners when component unmounts
+      return () => {
+        window.removeEventListener('userLogin', handleLogin)
+        window.removeEventListener('userLogout', handleLogout)
+      }
+    }
+  }, [loadUserData])
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      // Remove user from localStorage
+      localStorage.removeItem('user')
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
+      
+      // Update state
+      setUser(null)
+      setIsMobileMenuOpen(false)
+      
+      // Dispatch a logout event
+      const logoutEvent = new Event('userLogout')
+      window.dispatchEvent(logoutEvent)
+      
+      // Redirect to home page
+      router.push('/')
+      
+      // Force a page refresh
+      setTimeout(() => {
+        window.location.reload()
+      }, 100)
+    }
+  }
 
   return (
     <div className="border-b">
@@ -30,13 +113,33 @@ export function Navigation() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex mx-6">
           <NavigationMenuList>
-          <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Docs
-                </NavigationMenuLink>
-              </Link>
+            <NavigationMenuItem>
+              {user ? (
+                <Link href="/dashboard" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Dashboard
+                  </NavigationMenuLink>
+                </Link>
+              ) : (
+                <Link href="/doc" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Docs
+                  </NavigationMenuLink>
+                </Link>
+              )}
             </NavigationMenuItem>
+            {user && (
+              <NavigationMenuItem>
+                <Link href="/map" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <span className="flex items-center">
+                      <MapPin className="mr-1 h-4 w-4" />
+                      Map
+                    </span>
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            )}
             <NavigationMenuItem>
               <Link href="/pricing" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -66,40 +169,44 @@ export function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-t z-50">
             <div className="px-4 py-2">
+              {user && (
+                <div className="flex items-center justify-between mb-4 p-2 border-b pb-2">
+                  <div className="flex items-center space-x-2">
+                    <User className="h-5 w-5" />
+                    <span className="font-medium">Hello, {user.name}</span>
+                  </div>
+                  <Button 
+                    variant="destructive" 
+                    size="sm"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                </div>
+              )}
               <NavigationMenu>
                 <NavigationMenuList className="flex flex-col space-y-2">
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                    <NavigationMenuContent className="z-50">
-                      <ul className="grid gap-3 p-6 w-full">
-                        <li className="row-span-3">
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                              href="/"
-                            >
-                              <Truck className="h-6 w-6" />
-                              <div className="mb-2 mt-4 text-lg font-medium">
-                                TruckFlow
-                              </div>
-                              <p className="text-sm leading-tight text-muted-foreground">
-                                Smart logistics management for modern fleet operations
-                              </p>
-                            </a>
+                  {user && (
+                    <>
+                      <NavigationMenuItem>
+                        <Link href="/dashboard" legacyBehavior passHref>
+                          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Dashboard
                           </NavigationMenuLink>
-                        </li>
-                        <ListItem href="/features" title="Route Planning">
-                          Optimize routes with real-time traffic updates
-                        </ListItem>
-                        <ListItem href="/features" title="ELD Logs">
-                          Maintain electronic logging device compliance
-                        </ListItem>
-                        <ListItem href="/features" title="Rest Stops">
-                          Find and plan rest stops along your route
-                        </ListItem>
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link href="/map" legacyBehavior passHref>
+                          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            <span className="flex items-center">
+                              <MapPin className="mr-1 h-4 w-4" />
+                              Map
+                            </span>
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                    </>
+                  )}
                   <NavigationMenuItem>
                     <Link href="/pricing" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -120,14 +227,31 @@ export function Navigation() {
           </div>
         )}
 
-        {/* Login and Sign Up Buttons */}
+        {/* Login/Signup or User Welcome */}
         <div className="hidden md:flex ml-auto items-center space-x-4">
-          <Button variant="ghost" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button asChild variant="cyan">
-            <Link href="/signup">Sign Up</Link>
-          </Button>
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <User className="h-5 w-5" />
+                <span className="font-medium">Hello, {user.name}</span>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild variant="cyan">
+                <Link href="/signup">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

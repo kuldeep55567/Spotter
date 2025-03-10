@@ -14,8 +14,8 @@ function Footer() {
       <div>
         <h3 className="text-xl font-bold mb-4">Quick Links</h3>
         <ul className="space-y-2">
-          <li><Link href="/about" className="text-gray-400 hover:text-cyan-600">About Us</Link></li>
-          <li><Link href="/careers" className="text-gray-400 hover:text-cyan-600">Careers</Link></li>
+          <li><Link href="/doc" className="text-gray-400 hover:text-cyan-600">About Us</Link></li>
+          <li><Link href="/contact" className="text-gray-400 hover:text-cyan-600">Careers</Link></li>
           <li><Link href="/contact" className="text-gray-400 hover:text-cyan-600">Contact</Link></li>
         </ul>
       </div>
@@ -35,7 +35,7 @@ function Footer() {
         <div className="flex gap-4">
           <Link href="#" className="text-gray-400 hover:text-cyan-600">Facebook</Link>
           <Link href="#" className="text-gray-400 hover:text-cyan-600">Twitter</Link>
-          <Link href="#" className="text-gray-400 hover:text-cyan-600">LinkedIn</Link>
+          <Link href="https://www.linkedin.com/in/kuldeept03/" target='_blank' className="text-gray-400 hover:text-cyan-600">LinkedIn</Link>
         </div>
       </div>
     </div>
