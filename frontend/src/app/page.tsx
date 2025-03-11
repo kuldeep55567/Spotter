@@ -88,7 +88,7 @@ export default function Home() {
         </svg>
 
         {/* Main content */}
-        <div className="relative z-10 container mx-auto px-4 py-32 text-black">
+        <div className="relative z-10 container mx-auto px-4 py-32 text-black max-w-6xl">
           <div className="max-w-3xl">
             <div className="flex items-center mb-6 text-cyan-600">
               <Sparkles className="mr-2" />
@@ -136,7 +136,7 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="py-24 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-16">
             Everything you need to manage your fleet
           </h2>
@@ -167,7 +167,7 @@ export default function Home() {
 
       {/* Step-by-Step Tracking Section */}
       <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-16">
             How We Track Your Fleet
           </h2>
@@ -214,7 +214,7 @@ export default function Home() {
 
       {/* Comparison Section */}
       <section className="py-24 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-3xl font-bold text-center mb-16">
             Why Choose Us?
           </h2>
@@ -238,7 +238,7 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="bg-gray-50 py-24">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 text-center max-w-6xl">
           <h2 className="text-3xl font-bold mb-6">
             Ready to optimize your fleet operations?
           </h2>

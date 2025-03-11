@@ -56,7 +56,7 @@ export default function PricingPage() {
   ]
 
   return (
-    <div className="container mx-auto py-16 px-4 md:px-6">
+    <div className="container mx-auto py-16 px-4 md:px-6 max-w-6xl">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -159,7 +159,7 @@ export default function PricingPage() {
           Get started today and see how TruckFlow can transform your logistics efficiency.
         </p>
         <div className="flex justify-center space-x-4">
-          <Button  variant ="orange" size="lg">Start Free Trial</Button>
+          <Button variant="orange" size="lg">Start Free Trial</Button>
           <Button variant="outline" size="lg">Contact Sales</Button>
         </div>
       </div>

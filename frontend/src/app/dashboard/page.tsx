@@ -192,7 +192,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="text-orange-500">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 max-w-6xl">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold"> {`${userData?.name}'s Dashboard`}</h1>
             <div className="flex space-x-2">
@@ -219,7 +219,7 @@ const Dashboard: React.FC = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 max-w-6xl">
         {activeTab === 'dashboard' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Summary Cards */}

@@ -103,7 +103,7 @@ export function Navigation() {
 
   return (
     <div className="border-b">
-      <div className="flex h-16 items-center px-4 container mx-auto">
+      <div className="flex h-16 items-center px-4 container mx-auto max-w-6xl">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <Truck className="h-8 w-8" />
@@ -168,7 +168,7 @@ export function Navigation() {
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-t z-50">
-            <div className="px-4 py-2">
+            <div className="px-4 py-2 max-w-6xl mx-auto">
               {user && (
                 <div className="flex items-center justify-between mb-4 p-2 border-b pb-2">
                   <div className="flex items-center space-x-2">
