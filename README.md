@@ -10,6 +10,10 @@ TruckFlow is a comprehensive solution for truck drivers and fleet managers to op
 - Email: admin@gmail.com
 - Password: Admin@123
 
+## Demo Video
+
+[Watch the TruckFlow Demo (Loom)](https://www.loom.com/share/your-loom-video-id)
+
 ## Features
 
 - **Intelligent Route Planning**: Optimize routes with real-time traffic data and ELD compliance built-in
