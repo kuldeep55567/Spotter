@@ -19,7 +19,7 @@ export default function ContactPage() {
     email: "truckFlow@gmail.com",
     phone: "+91 6203167922",
     github: "https://github.com/kuldeep55567",
-    portfolio: "https://portfolio.kanha.dev",
+    portfolio: "https://kuldeept.medium.com/",
     hobbies: ["Travelling", "Development", "Reading"],
     company: "TruckFlow",
     location: "India",
@@ -115,7 +115,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         <Card className="shadow-md">
           <CardHeader>
             <CardTitle className="text-2xl text-cyan-500">Send Me a Message</CardTitle>
-            <CardDescription>I'll get back to you as soon as possible</CardDescription>
+            <CardDescription>I will get back to you as soon as possible</CardDescription>
           </CardHeader>
           <CardContent>
             <form id="contact-form" onSubmit={handleSubmit} className="space-y-4">

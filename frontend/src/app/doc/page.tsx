@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertCircle, Code, MapPin, Clock, Route, Truck, FileText, Server, Zap, Shield } from 'lucide-react';
+import { AlertCircle, MapPin, Clock, Route, Truck, FileText, Server, Zap, Shield } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function DocsPage() {

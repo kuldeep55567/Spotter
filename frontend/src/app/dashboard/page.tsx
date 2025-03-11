@@ -234,7 +234,7 @@ const Dashboard: React.FC = () => {
                   <p className="mt-2 text-gray-600">{logs[0]?.description || 'No description'}</p>
                 </div>
                 <div className="bg-gray-100 rounded-md p-4">
-                  <h3 className="text-lg font-medium">Today's Stats</h3>
+                  <h3 className="text-lg font-medium">Today Stats</h3>
                   <div className="mt-2">
                     <p className="text-gray-600">Drive Time: {formatTime(hosSummaries[0]?.total_drive_time || '0.00')}</p>
                     <p className="text-gray-600">Duty Time: {formatTime(hosSummaries[0]?.total_duty_time || '0.00')}</p>
