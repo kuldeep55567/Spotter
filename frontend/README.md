@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TruckFlow
 
-## Getting Started
+TruckFlow is a comprehensive solution for truck drivers and fleet managers to optimize trucking operations through intelligent route planning and automated ELD (Electronic Logging Device) compliance.
 
-First, run the development server:
+## Deployed Application
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Live Demo:** [https://spotter-ai.vercel.app/](https://spotter-ai.vercel.app/)
+
+**Demo Credentials:**  
+- Email: admin@gmail.com
+- Password: Admin@123
+
+## Features
+
+- **Intelligent Route Planning**: Optimize routes with real-time traffic data and ELD compliance built-in
+- **Automated ELD Logs**: Generate electronic logging device sheets that comply with FMCSA regulations
+- **Rest Stop & Fuel Planning**: Find optimal locations for rest breaks and refueling
+- **Hours of Service Compliance**: Support for property-carrying drivers (70hrs/8days)
+- **Accurate Time Estimations**: 1 hour for pickup and drop-off operations built into schedule
+
+## Technology Stack
+
+- **Frontend**: Next.js & React with Tailwind CSS
+- **Backend**: Django REST Framework
+- **Maps**: Mapbox API for route visualization
+- **Hosting**: AWS (Backend) & Vercel (Frontend)
+- **Database**: MySQL
+
+## Core Functionality
+
+TruckFlow takes the following inputs:
+- Current location
+- Pickup location
+- Dropoff location
+- Current Cycle Used (Hours)
+
+And produces:
+- Interactive map showing the optimized route
+- Required rest stops based on HOS regulations
+- Fueling locations (at least once every 1,000 miles)
+- Automated ELD logs compliant with regulations
+
+## Project Structure
+
+```
+truckflow/
+├── frontend/               # Next.js React application
+│   ├── components/         # React components
+│   ├── pages/              # Next.js pages
+│   ├── public/             # Static assets
+│   └── styles/             # CSS styles
+│
+├── backend/                # Django application
+│   ├── api/                # Django REST API
+│   ├── spotter/              # Route planning logic
+│
+└── docs/                   # Documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Assumptions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Property-carrying driver, 70hrs/8days, no adverse driving conditions
+- Fueling at least once every 1,000 miles
+- 1 hour allocated for pickup and drop-off operations
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local Development Setup
 
-## Learn More
+### Backend (Django)
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Clone the repository
+git clone https://github.com/kuldeep55567/spotter.git
+cd spotter/backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Create and activate virtual environment
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Install dependencies
+pip install -r requirements.txt
 
-## Deploy on Vercel
+# Apply migrations
+python manage.py migrate
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run development server
+python manage.py runserver
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Frontend (Next.js)
+
+```bash
+# Navigate to frontend directory
+cd ../frontend
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+## API Documentation
+
+The TruckFlow API provides endpoints for:
+- User authentication
+- Route planning
+- ELD log generation
+
+For detailed API documentation, see the `/api` tab in the application.
+
+## Future Enhancements
+
+- Mobile app with offline capabilities
+- Integration with popular fleet management systems
+- Real-time driver communication
+- Fuel price optimization
+- Weather condition alerts
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

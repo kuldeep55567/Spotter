@@ -10,16 +10,16 @@ export default function DocsPage() {
     const [activeTab, setActiveTab] = useState("overview");
 
     return (
-        <div className="container mx-auto py-10 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto py-10 px-4 md:px-6">
             <div className="flex flex-col space-y-4 mb-8">
-                <h1 className="text-4xl font-bold">TruckFlow Documentation</h1>
+                <h1 className="text-4xl font-bold text-orange-500">Documentation</h1>
                 <p className="text-xl text-muted-foreground">
                     Complete guide to using TruckFlow for optimized trucking operations
                 </p>
             </div>
 
             <Alert className="mb-8 border-blue-500 bg-blue-50 dark:bg-blue-950">
-                <AlertCircle className="h-5 w-5 text-blue-500" />
+                <AlertCircle className="h-5 w-5 text-white" />
                 <AlertTitle className="text-blue-700 dark:text-blue-300">Testing Credentials</AlertTitle>
                 <AlertDescription className="text-blue-700 dark:text-blue-300">
                     Use <strong>admin@gmail.com</strong> and password <strong>Admin@123</strong> to test the platform's functionality.
